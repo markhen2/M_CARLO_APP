@@ -4,6 +4,7 @@ import yfinance as yf
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from scipy.stats import norm
+import customtkinter
 import tkinter as tk
 from tkinter import Toplevel, Entry, filedialog
 from tkinter import *
@@ -18,7 +19,7 @@ import shutil
 
 plt.style.use('ggplot')
 
-GITHUB_REPO = "markhen2/M_CARLO_APP"
+GITHUB_REPO = "markhen2/Stock-review-app.git"
 CURRENT_VERSION = "1.0.0"
 
 def get_latest_release():
@@ -39,26 +40,14 @@ def check_for_updates():
 def download_and_apply_update(url):
     response = requests.get(url)
     response.raise_for_status()
+    with open("update.zip", "wb") as file:
+        file.write(response.content)
+    with zipfile.ZipFile("update.zip", "r") as zip_ref:
+        zip_ref.extractall("update")
+    os.remove("update.zip")
+    apply_update("update")
+    shutil.rmtree("update")
 
-    temp_zip_path = "temp_update.zip"
-    with open(temp_zip_path, "wb") as temp_zip_file:
-        temp_zip_file.write(response.content)
-    
-    temp_dir = "temp_update_dir"
-    with zipfile.ZipFile(temp_zip_path, 'r') as zip_ref:
-        zip_ref.extractall(temp_dir)
-    
-
-    specific_files = ["app.py"] 
-    for file_name in specific_files:
-        src_path = os.path.join(temp_dir, file_name)
-        dest_path = os.path.join("desired_location", file_name)  
-        shutil.copy(src_path, dest_path)
-    
-    os.remove(temp_zip_path)
-    shutil.rmtree(temp_dir)
-
-    print("Update applied successfully.")
 def apply_update(update_dir):
     for item in os.listdir(update_dir):
         s = os.path.join(update_dir, item)
