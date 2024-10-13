@@ -48,15 +48,14 @@ def download_and_apply_update(url):
     with zipfile.ZipFile(temp_zip_path, 'r') as zip_ref:
         zip_ref.extractall(temp_dir)
     
-
-    specific_files = ["app.py"] 
-    for file_name in specific_files:
-        src_path = os.path.join(temp_dir, file_name)
-        dest_path = os.path.join("desired_location", file_name)  
-        shutil.copy(src_path, dest_path)
+    specific_file = "markhen2-M_CARLO_APP-5e74841/app.py"  # Adjust the path to the specific file within the zip
+    src_path = os.path.join(temp_dir, specific_file)
+    dest_path = os.path.join(os.getcwd(), "app.py")  # Adjust the destination path as needed
+    shutil.copy(src_path, dest_path)
     
     os.remove(temp_zip_path)
     shutil.rmtree(temp_dir)
+
 
     print("Update applied successfully.")
 def apply_update(update_dir):
