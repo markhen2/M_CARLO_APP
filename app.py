@@ -16,6 +16,12 @@ import os
 import zipfile
 import shutil
 
+import datetime 
+from datetime import datetime
+from datetime import timedelta
+
+today=datetime.today()
+
 plt.style.use('ggplot')
 
 GITHUB_REPO = "markhen2/M_CARLO_APP"
@@ -151,7 +157,7 @@ def monte_carlo(ticker, prediction_days, number_simulations,BSM=0.26,threshold1=
     plt.show()
 
 def run_simulation():
-    check_for_updates()  # Check for updates before running the simulation
+    #check_for_updates()  # Check for updates before running the simulation
     global ticker
     global fig
     ticker = ticker_entry.get()
@@ -217,7 +223,10 @@ ttk.Label(frame, text="Threshold 2:").grid(row=5, column=0, sticky=tk.W)
 threshold2_entry = ttk.Entry(frame)
 threshold2_entry.grid(row=5, column=1, sticky=(tk.W, tk.E))
 
-run_button = ttk.Button(frame, text="Run Simulation", command=run_simulation)
-run_button.grid(row=6, column=0, columnspan=2)
+if today<datetime(2024,11,22,16,23,41,666584):
+    run_button = ttk.Button(frame, text="Run Simulation", command=run_simulation)
+    run_button.grid(row=6, column=0, columnspan=2)
+else:
+    ttk.Label(frame,text='\nTHIS VERSION IS NOW DEPRECIATED\n\nPlease visit www.stockanalytics.ie for a new version of this application').grid(row=6,column=0,sticky=tk.W)
 
 window.mainloop()
