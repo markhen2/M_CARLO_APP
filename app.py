@@ -50,7 +50,7 @@ def download_and_apply_update(url):
     
     specific_file = "markhen2-M_CARLO_APP-5e74841/app.py"  # Adjust the path to the specific file within the zip
     src_path = os.path.join(temp_dir, specific_file)
-    dest_path = os.path.join(os.getcwd(), "app.py")  # Adjust the destination path as needed
+    dest_path = os.path.join(os.getcwd(), "app_updated.py")  # Adjust the destination path as needed
     shutil.copy(src_path, dest_path)
     
     os.remove(temp_zip_path)
